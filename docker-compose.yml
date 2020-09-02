@@ -1,0 +1,67 @@
+version: '3'
+services:
+  spring-eureka-server:
+    build:
+      context: ./spring-eureka-server
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    ports:
+      - 8761:8761
+  spring-eureka-image:
+    build:
+      context: ./spring-eureka-image
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    depends_on:
+      - spring-eureka-server
+    ports:
+      - 8200:8200
+  spring-eureka-gallery:
+    build:
+      context: ./spring-eureka-gallery
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    depends_on:
+      - spring-eureka-server
+    ports:
+      - 8100:8100
+  spring-eureka-auth:
+    build:
+      context: ./spring-eureka-auth
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    depends_on:
+      - spring-eureka-server
+    ports:
+      - 9100:9100
+  spring-eureka-common:
+    build:
+      context: ./spring-eureka-common
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    depends_on:
+      - spring-eureka-server
+    ports:
+      - 9200:9200
+  spring-eureka-zuul:
+    build:
+      context: ./spring-eureka-zuul
+      dockerfile: Dockerfile
+    networks: 
+      - eureka
+    depends_on:
+      - spring-eureka-server
+    ports:
+      - 8762:8762
+
+# As pre-requisite create a network : docker network create eureka
+networks:
+  eureka:
+    external:
+      name: eureka
+      
