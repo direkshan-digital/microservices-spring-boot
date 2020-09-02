@@ -59,6 +59,7 @@ services:
     ports:
       - 8762:8762
 
+# As pre-requisite create a network : docker network create eureka
 networks:
   eureka:
     external:
